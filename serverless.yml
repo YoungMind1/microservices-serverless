@@ -1,0 +1,119 @@
+service: android-emulator-serverless
+
+frameworkVersion: ^3.38.0
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: local
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
+functions:
+  event-show:
+    handler: bin/event-show
+    package:
+      include:
+        - bin/event-show
+    events:
+      - http:
+          path: api/events/{id}
+          method: get
+
+  event-store:
+    handler: bin/event-store
+    package:
+      include:
+        - bin/event-store
+    events:
+      - http:
+          path: api/events/
+          method: post
+
+  event-update:
+    handler: bin/event-update
+    package:
+      include:
+        - bin/event-update
+    events:
+      - http:
+          path: api/events/{id}
+          method: put
+
+  event-destroy:
+    handler: bin/event-destroy
+    package:
+      include:
+        - bin/event-destroy
+    events:
+      - http:
+          path: api/events/{id}
+          method: delete
+  user-show:
+    handler: bin/user-show
+    package:
+      include:
+        - bin/user-show
+    events:
+      - http:
+          path: api/users/{id}
+          method: get
+  user-store:
+    handler: bin/user-store
+    package:
+      include:
+        - bin/user-store
+    events:
+      - http:
+          path: api/users/
+          method: post
+  user-update:
+    handler: bin/user-update
+    package:
+      include:
+        - bin/user-update
+    events:
+      - http:
+          path: api/users/{id}
+          method: put
+  user-destroy:
+    handler: bin/user-destroy
+    package:
+      include:
+        - bin/user-destroy
+    events:
+      - http:
+          path: api/users/{id}
+          method: delete
+  registration-show:
+    handler: bin/registration-show
+    package:
+      include:
+        - bin/registration-show
+    events:
+      - http:
+          path: api/registrations/{id}
+          method: get
+  registration-store:
+    handler: bin/registration-store
+    package:
+      include:
+        - bin/registration-store
+    events:
+      - http:
+          path: api/registrations/
+          method: post
+  registrations-cancelRegistrations:
+    handler: bin/registrations-cancelRegistration
+    package:
+      include:
+        - bin/registration-cancelRegistration
+    events:
+      - http:
+          path: api/registrations/{id}/cancel
+          method: put
